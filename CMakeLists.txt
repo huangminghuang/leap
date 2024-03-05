@@ -35,6 +35,9 @@ set( NODE_EXECUTABLE_NAME nodeos )
 set( KEY_STORE_EXECUTABLE_NAME keosd )
 set( LEAP_UTIL_EXECUTABLE_NAME leap-util )
 
+set(LEAP_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(LEAP_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
 # http://stackoverflow.com/a/18369825
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 10.2)
@@ -193,28 +196,28 @@ option(DISABLE_WASM_SPEC_TESTS "disable building of wasm spec unit tests" OFF)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/eosio.version.in ${CMAKE_CURRENT_BINARY_DIR}/eosio.version.hpp)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/eosio.version.hpp DESTINATION ${CMAKE_INSTALL_FULL_INCLUDEDIR} COMPONENT dev EXCLUDE_FROM_ALL)
 
-set(EOS_ROOT_DIR "${CMAKE_BINARY_DIR}/lib")
+set(EOS_ROOT_DIR "${CMAKE_CURRENT_BINARY_DIR}/lib")
 # legacy eosio CMake files
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/eosio-config.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/eosio/eosio-config.cmake @ONLY)
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/EosioTesterBuild.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/eosio/EosioTester.cmake @ONLY)
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/EosioCheckVersion.cmake ${CMAKE_BINARY_DIR}/lib/cmake/eosio/EosioCheckVersion.cmake COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/eosio-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/eosio/eosio-config.cmake @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/EosioTesterBuild.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/eosio/EosioTester.cmake @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/EosioCheckVersion.cmake ${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/eosio/EosioCheckVersion.cmake COPYONLY)
 # new leap CMake files
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/leap-config.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/leap/leap-config.cmake @ONLY)
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/EosioTesterBuild.cmake.in ${CMAKE_BINARY_DIR}/lib/cmake/leap/EosioTester.cmake @ONLY)
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/EosioCheckVersion.cmake ${CMAKE_BINARY_DIR}/lib/cmake/leap/EosioCheckVersion.cmake COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/leap-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/leap/leap-config.cmake @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/EosioTesterBuild.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/leap/EosioTester.cmake @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/EosioCheckVersion.cmake ${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/leap/EosioCheckVersion.cmake COPYONLY)
 
 set(EOS_ROOT_DIR "${CMAKE_INSTALL_FULL_LIBDIR}")
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/EosioTester.cmake.in ${CMAKE_BINARY_DIR}/modules/EosioTester.cmake @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/EosioTester.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/modules/EosioTester.cmake @ONLY)
 # legacy eosio CMake files
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/eosio-config.cmake.in ${CMAKE_BINARY_DIR}/modules/eosio-config.cmake @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/modules/eosio-config.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/eosio COMPONENT dev EXCLUDE_FROM_ALL)
-install(FILES ${CMAKE_BINARY_DIR}/modules/EosioTester.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/eosio COMPONENT dev EXCLUDE_FROM_ALL)
-install(FILES ${CMAKE_SOURCE_DIR}/CMakeModules/EosioCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/eosio COMPONENT dev EXCLUDE_FROM_ALL)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/eosio-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/modules/eosio-config.cmake @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/modules/eosio-config.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/eosio COMPONENT dev EXCLUDE_FROM_ALL)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/modules/EosioTester.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/eosio COMPONENT dev EXCLUDE_FROM_ALL)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/EosioCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/eosio COMPONENT dev EXCLUDE_FROM_ALL)
 # new leap CMake files
-configure_file(${CMAKE_SOURCE_DIR}/CMakeModules/leap-config.cmake.in ${CMAKE_BINARY_DIR}/modules/leap-config.cmake @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/modules/leap-config.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
-install(FILES ${CMAKE_BINARY_DIR}/modules/EosioTester.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
-install(FILES ${CMAKE_SOURCE_DIR}/CMakeModules/EosioCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/leap-config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/modules/leap-config.cmake @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/modules/leap-config.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/modules/EosioTester.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/EosioCheckVersion.cmake DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/leap COMPONENT dev EXCLUDE_FROM_ALL)
 
 configure_file(LICENSE                                                     licenses/leap/LICENSE           COPYONLY)
 configure_file(libraries/softfloat/COPYING.txt                             licenses/leap/LICENSE.softfloat COPYONLY)
@@ -265,16 +268,16 @@ else()
    # The `make package` installation of symlinks happens via the `postinst` script installed in cmake.package via the line below
 endif()
 
-configure_file(${CMAKE_SOURCE_DIR}/libraries/cli11/bash-completion/completions/leap-util
-               ${CMAKE_BINARY_DIR}/programs/leap-util/bash-completion/completions/leap-util COPYONLY)
-configure_file(${CMAKE_SOURCE_DIR}/libraries/cli11/bash-completion/completions/cleos
-               ${CMAKE_BINARY_DIR}/programs/cleos/bash-completion/completions/cleos COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libraries/cli11/bash-completion/completions/leap-util
+               ${CMAKE_CURRENT_BINARY_DIR}/programs/leap-util/bash-completion/completions/leap-util COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libraries/cli11/bash-completion/completions/cleos
+               ${CMAKE_CURRENT_BINARY_DIR}/programs/cleos/bash-completion/completions/cleos COPYONLY)
 
 install(FILES libraries/cli11/bash-completion/completions/leap-util DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/bash-completion/completions COMPONENT base)
 install(FILES libraries/cli11/bash-completion/completions/cleos DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/bash-completion/completions COMPONENT base)
 
 # Add the boost submodule we used to build to our install package, so headers can be found for libtester
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/libraries/boost/"
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/libraries/boost/"
         DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/leap_boost
         COMPONENT dev EXCLUDE_FROM_ALL
         PATTERN ".git/*" EXCLUDE
@@ -286,9 +289,9 @@ install(DIRECTORY "${CMAKE_SOURCE_DIR}/libraries/boost/"
         )
 
 add_custom_target(dev-install
-  COMMAND "${CMAKE_COMMAND}" --build "${CMAKE_BINARY_DIR}"
-  COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}"
-  COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}" --component dev
+  COMMAND "${CMAKE_COMMAND}" --build "${CMAKE_CURRENT_BINARY_DIR}"
+  COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_CURRENT_BINARY_DIR}"
+  COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_CURRENT_BINARY_DIR}" --component dev
   USES_TERMINAL
 )
 

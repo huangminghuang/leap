@@ -63,8 +63,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/deep-mind/deep-mind.hpp.in ${CMAKE_CU
 
 add_custom_command(
    OUTPUT protocol_feature_digest_tests.cpp
-   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/gen_protocol_feature_digest_tests.py ${CMAKE_CURRENT_SOURCE_DIR}/../libraries/chain/protocol_feature_manager.cpp > protocol_feature_digest_tests.cpp
-   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/../libraries/chain/protocol_feature_manager.cpp ${CMAKE_CURRENT_SOURCE_DIR}/gen_protocol_feature_digest_tests.py
+   COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/gen_protocol_feature_digest_tests.py ${LEAP_SOURCE_DIR}/libraries/chain/protocol_feature_manager.cpp > protocol_feature_digest_tests.cpp
+   DEPENDS ${LEAP_SOURCE_DIR}/libraries/chain/protocol_feature_manager.cpp ${CMAKE_CURRENT_SOURCE_DIR}/gen_protocol_feature_digest_tests.py
 )
 
 ### BUILD UNIT TEST EXECUTABLE ###
@@ -75,14 +75,14 @@ target_link_libraries( unit_test eosio_chain_wrap state_history chainbase eosio_
 
 target_compile_options(unit_test PUBLIC -DDISABLE_EOSLIB_SERIALIZE)
 target_include_directories( unit_test PUBLIC
-                            ${CMAKE_SOURCE_DIR}/libraries/testing/include
-                            ${CMAKE_SOURCE_DIR}/test-contracts
-                            ${CMAKE_BINARY_DIR}/contracts
+                            ${LEAP_SOURCE_DIR}/libraries/testing/include
+                            ${LEAP_SOURCE_DIR}/test-contracts
+                            ${CMAKE_CURRENT_BINARY_DIR}/contracts
                             ${CMAKE_CURRENT_SOURCE_DIR}/contracts
                             ${CMAKE_CURRENT_BINARY_DIR}/contracts
                             ${CMAKE_CURRENT_BINARY_DIR}/include
-                            ${CMAKE_SOURCE_DIR}/plugins/http_plugin/include
-                            ${CMAKE_SOURCE_DIR}/plugins/chain_interface/include)
+                            ${LEAP_SOURCE_DIR}/plugins/http_plugin/include
+                            ${LEAP_SOURCE_DIR}/plugins/chain_interface/include)
 
 ### MARK TEST SUITES FOR EXECUTION ###
 add_test(NAME protocol_feature_digest_unit_test COMMAND unit_test --run_test=protocol_feature_digest_tests --report_level=detailed --color_output)
@@ -133,7 +133,7 @@ if(ENABLE_COVERAGE_TESTING)
     COMMAND ${LCOV_PATH} --directory . --zerocounters
     # run tests
     COMMAND ./tools/ctestwrapper.sh -R ${ctest_tests} -E ${ctest_exclude_tests}
-    COMMAND ${LCOV_PATH} --directory . --capture --gcov-tool ${CMAKE_SOURCE_DIR}/tools/llvm-gcov.sh --output-file ${Coverage_NAME}.info
+    COMMAND ${LCOV_PATH} --directory . --capture --gcov-tool ${LEAP_SOURCE_DIR}/tools/llvm-gcov.sh --output-file ${Coverage_NAME}.info
     COMMAND ${LCOV_PATH} -remove ${Coverage_NAME}.info '*/boost/*' '/usr/lib/*' '/usr/include/*' '*/externals/*' '*/libfc/*' '*/wasm-jit/*' --output-file ${Coverage_NAME}_filtered.info
     COMMAND ${GENHTML_PATH} -o ${Coverage_NAME} ${PROJECT_BINARY_DIR}/${Coverage_NAME}_filtered.info
     COMMAND if [ "$CI" != "true" ]\; then ${CMAKE_COMMAND} -E remove ${Coverage_NAME}.base ${Coverage_NAME}.info ${Coverage_NAME}_filtered.info ${Coverage_NAME}.total ${PROJECT_BINARY_DIR}/${Coverage_NAME}.info.cleaned ${PROJECT_BINARY_DIR}/${Coverage_NAME}_filtered.info.cleaned\; fi
